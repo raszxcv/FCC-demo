@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>tomato</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing:border-box;
+		}
+		span{
+			font-size:30px;
+			text-align: center;
+			cursor:pointer;
+			margin:5px;
+		}
+		h1{
+			text-align: center;
+			font-size:60px;
+		}
+		body{
+			background:#eee;
+		}
+		#box{
+			margin:0 auto;
+			width:500px;
+		}
+		#a{
+			margin:0 auto;
+			width:400px;
+			height:100px;
+			display: flex;
+		}
+		#b{
+
+			margin:0 auto;
+			width:400px;
+			height:400px;
+			border:1px solid #9c0;
+			border-radius:50%;
+			margin-top:30px;
+			position:relative;
+			cursor: pointer;
+			overflow: hidden;
+		}
+		#c{
+			width:100%;
+			background:#9c0;
+			position: absolute;
+			bottom: 0;
+		}
+		#d{
+			width:100%;
+			height:100%;
+			border-radius:50%;
+			position: absolute;
+			bottom: 0;
+			text-align: center;
+			font-size:50px;
+
+		}
+		#res{
+			position: absolute;
+			top:50%;
+			left:50%;
+			transform: translate(-50%,-50%);
+		}
+		#breakk,#session{
+			text-align:center;
+			width:50%;
+			height:100px;
+			padding-top:30px;
+		}
+	</style>
+</head>
+<body>
+<h1>MY TOMATO TIME!</h1>
+	<div id="box">
+		<div id="a">
+			<div id="breakk">
+				<p>BREAK</p>
+				<p><span id='brem'>-</span><span id='btime'></span><span id='badd'>+</span></p>
+			</div>
+			<div id="session">
+				<p>SESSION</p>
+				<p><span id='srem'>-</span><span id='stime'></span><span id='sadd'>+</span></p>
+			</div>
+		</div>
+		<div id="b">
+			<div id="c">
+				
+			</div>
+			<div id="d">
+				<p id='res'></p>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		var Time,
+		breakt,
+		i = 60,
+		clock=true,
+		clock2=true,
+			k=0,
+			j=0,
+			bt=5,
+			st=1;
+			tomato=st,
+			nowT=0,	
+			newT=0,
+			bnowT=0,
+			bnewT=0;
+		res.innerText = 'SESSION'+'\n'+tomato
+		btime.innerText = bt
+		stime.innerText = st
+		brem.addEventListener('click',function(){
+			if(bt-1 === 0 || clock2 === false){
+				return
+			}
+			bt -= 1
+			btime.innerText = bt
+		})
+		srem.addEventListener('click',function(){
+			if(st-1 === 0 || clock2 === false){
+				return
+			}
+			st -= 1
+			stime.innerText = tomato = st
+			res.innerText = 'SESSION'+'\n'+tomato
+		})
+		badd.addEventListener('click',function(){
+			if(clock2 === false){
+				return
+			}
+			bt += 1
+			btime.innerText = bt
+		})
+		sadd.addEventListener('click',function(){
+			if( clock2 === false){
+				return
+			}
+			st += 1
+			stime.innerText = tomato = st
+			res.innerText = 'SESSION'+'\n'+tomato
+		})
+		b.addEventListener('click',function(){
+			if(!clock){
+				breakk()
+				return	
+			}
+			if(Time){
+				clearInterval(Time)
+				Time = undefined
+				newT = Date.now()
+				return
+			}
+			if(nowT === 0){
+				res.innerText = 'SESSION'+'\n'+(tomato < 1?'00':tomato) + ':' + '00'
+				nowT = Date.now()
+			}else{
+				k += Date.now()-newT
+			}
+			Time = setInterval(function(){
+				clock2 = false
+				if(i === 60){
+					tomato -= 1
+				}
+				i-=1
+				if(i === 0 ){
+					i = 60
+				}
+
+					res.innerText = 'SESSION'+'\n'+(tomato === 0?'00':tomato) + ':' + (i<10?'0'+i:i)
+				c.style.height = Math.ceil((Date.now()-(k+nowT))/(60000*st)*100)+'%'
+				if(Date.now()-(k+nowT) > 60000*st){
+					c.style.background='#f44'
+					c.style.height = '0px'
+					tomato = bt
+					i=60
+					breakk()
+					nowT = 0
+					k = 0
+					clearTimeout(Time)
+				}
+			},1000)
+		})
+
+		function breakk(){
+			clock = false
+			if(breakt){
+				clearInterval(breakt)
+				breakt = undefined
+				bnewT = Date.now()
+				return
+			}
+			if(bnowT === 0){
+				res.innerText = 'BREAK'+'\n'+(tomato < 1?'00':tomato) + ':' + '00'
+				bnowT = Date.now()
+			}else{
+				j += Date.now()-bnewT
+			}
+			breakt = setInterval(function(){
+				if(i === 60){
+					tomato -= 1
+				}
+				i-=1
+				if(i === 0 ){
+					i = 60
+				}
+
+				res.innerText = 'BREAK'+'\n'+(tomato === 0?'00':tomato) + ':' + (i<10?'0'+i:i)
+				c.style.height = Math.ceil((Date.now()-(j+bnowT))/(60000*bt)*100)+'%'
+				if(Date.now()-(j+bnowT) > 60000*bt){
+					clock2 = true
+					clock = true
+					bnowT = 0
+					j = 0
+					clearTimeout(breakt)
+				}
+			},1000)
+		}
+
+
+
+
+			</script>
+		
+</body>
+</html>
