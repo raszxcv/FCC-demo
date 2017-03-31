@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>counter</title>
+	<style>
+		*{
+			margin: 0;
+			padding:0;
+		}
+		#box{
+			width:255px;
+			border:1px solid black;
+			margin:0 auto;
+			margin-top:100px;
+		}
+		#value{
+			margin:0 auto;
+			width:90%;
+			background:#ccc;
+			text-align: right;
+			height:20px;
+			margin-top:10px;
+			margin-bottom:10px;
+		}
+		button{
+			width:50px;
+			height:40px;
+			margin:5px;
+		}
+	</style>
+</head>
+<body>
+<div id="box">
+	<div id="value"></div>
+	<button id="ac">AC</button>
+	<button id="ce">CE</button>
+	<button id="yu">%</button>
+	<button id="chu">/</button>
+	<button id="sev">7</button>
+	<button id="eig">8</button>
+	<button id="nig">9</button>
+	<button id="chen">*</button>
+	<button id="four">4</button>
+	<button id="fire">5</button>
+	<button id="six">6</button>
+	<button id="jian">-</button>
+	<button id="one">1</button>
+	<button id="two">2</button>
+	<button id="three">3</button>
+	<button id="jia">+</button>
+	<button id="dian">.</button>
+	<button id="zero">0</button>
+	<button id="">Ans</button>
+	<button id="">=</button>
+</div>
+	<script>
+		var ans = '';
+		var result = '';
+		box.addEventListener('click',function(e){
+			var sum = e.target.innerText
+			try{
+				if(parseInt(sum) === +sum || sum === '%' || sum === '/' || sum=== '*' || sum === '-' || sum === '+' || sum === '.'){
+					result = result + sum
+					value.innerText = result
+				}else if(sum === '='){
+					ans = result
+					value.innerText = eval(ans)
+				}else if(sum === 'AC'){
+					value.innerText = ''
+				}else if(sum === 'CE'){
+					result = result.slice(0,-1)
+					value.innerText = result
+				}
+			}catch(err){
+				console.error(err)
+				alert('你的输入有误!请点击AC重新输入!')
+			}
+			
+
+		})
+	</script>
+</body>
+</html>
