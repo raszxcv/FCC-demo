@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>FCCtianqi</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+<style>
+	*{
+		margin:0;
+		padding:0;
+	}
+	body{
+		background:rgb(13,206,203);
+		font-family:'微软雅黑';
+		text-align:center;
+	}
+	li{
+		list-style:none;
+	}
+	a{
+		text-decoration:none;
+		display:inline-block;
+		padding:10px;
+		color:#fff;
+		background:rgb(200,219,116);
+		transition:all 0.3s;	
+	}
+	.btn:hover{
+		background:#eee;
+		color:#000;
+	}
+	.header{
+		font-size:30px;
+		text-align:center;
+		margin-top:20px;
+	}
+	.describe{
+		font-size:20px;
+		color:#666;
+		text-align:center;
+		margin-top:20px;
+	}
+	.content{
+		width:180px;
+		height:180px;
+		margin:10px;
+		border-radius:10px;
+		background:#ccc;
+		float:left;
+	}
+	.index{
+		width:600px;
+		margin:0 auto;
+		margin-top:30px;
+		position:relative;
+	}
+	.index:after{
+		clear:both;
+		display:block;
+		content:'';
+	}
+	input{
+		width:100px;
+		height:50px;
+		font-size:20px;
+		color:#666;
+		text-align:center;
+		margin-top:20px;
+		background:#ddd;
+	}
+</style>
+</head>
+<body>
+
+	<ul class="index">
+		<li class="content city">
+			<div class="header">当前城市</div>
+			<input class='city-cnt' type="text" placeholder='输入城市名'>
+		</li>
+		<li class="content time">
+			<div class="header">当前日期</div>
+			<p class='describe'></p>
+		</li>
+		<li class="content updata">
+			<div class="header">更新时间</div>
+			<p class='describe'></p>
+		</li>
+		<li class="content temp">
+			<div class="header">当前温度</div>
+			<p class='describe'></p>
+		</li>
+		<li class="content humidity">
+			<div class="header">当前湿度</div>
+			<p class='describe'></p>
+		</li>
+		<li class="content temperature">
+			<div class="header">今日温度</div>
+			<p class='describe'></p>
+		</li>
+		<li class="content weather">
+			<div class="header">今日天气</div>
+			<p class='describe'></p>
+		</li>
+		<li class="content dressing_index">
+			<div class="header">穿衣指数</div>
+			<p class='describe'></p>
+		</li>
+		<li class="content uv_index">
+			<div class="header">紫外线强度</div>
+			<p class='describe'></p>
+		</li>
+		
+	</ul>
+	<a class='btn' href="#">NEW</a>
+	
+	
+
+    <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+    <script>
+    	var $btn=$('.btn'),
+    		city = $('.city-cnt'),
+    		$time = $('.time p'),
+    		$updata = $('.updata p'),
+    		$temp = $('.temp p'),
+    		$humidity = $('.humidity p'),
+    		$temperature = $('.temperature p'),
+    		$weather = $('.weather p'),
+    		$dressing_index = $('.dressing_index p'),
+    		$uv_index = $('.uv_index p');
+    		clock=false;
+    	$btn.on('click',function(){
+    		if(clock===false){
+    			goajax(city.val()||'深圳');
+    		}
+    		
+    	})
+    	function goajax(city){   
+    		clock=true;			
+    		$.ajax({
+    			url:'http://v.juhe.cn/weather/index',
+    			type:'GET',
+    			dataType: 'jsonp',
+    			data:{
+    				cityname:city,
+    				key:'3e47cad30d01d4c2d82604f64bbdf242'
+    			},
+    			success:function(data){
+    					console.log(data.resultcode)
+    					if(data.resultcode==='200'&&data.reason==='successed!'){
+    					var data=data.result,
+    						sk=data.sk,
+    						today=data.today;
+    					$time.text(today.date_y);
+						$updata.text(sk.time);
+						$temp.text(sk.temp+'℃');
+						$humidity.text(sk.humidity);
+						$temperature.text(today.temperature);
+						$weather.text(today.weather);
+						$dressing_index.text(today.dressing_index);
+						$uv_index.text(today.uv_index);	
+						clock=false;
+						
+    					}else {
+    						alert('错误的城市名');
+    						clock=false;
+    					}
+    			}
+    	})
+    	}
+    </script>
+</body>
+</html>
+<!--
