@@ -21,7 +21,7 @@
 			position:absolute;
 			white-space:nowrap;
 			transition: 3s;
-			animation:danmu ease 5s;
+			animation:danmu linear 4s;
 			animation-fill-mode:forwards;
 		}
 		#b{
@@ -30,10 +30,19 @@
 			text-align: center;
 		}
 		input{
-			width:200px;
+			margin-top:20px;
+			width:300px;
+			height:30px;
+			border:1px solid #ccc;
+			border-radius:5px;
+			text-indent: 1em;
 		}
 		button{
+			margin-top:20px;
 			width:100px;
+			background:#fff;
+			height:30px;
+			border-radius:5px;
 		}
 		#fire{
 			border:1px solid green;
@@ -43,6 +52,8 @@
 		}
 		@keyframes danmu{
 			0%{right:0;}
+			85%{opacity:0.6;}
+			95%{opacity:0.3;}
 			100%{right:800px;opacity:0;}
 		}
 	</style>
@@ -51,7 +62,7 @@
 	<div id="a">
 	</div>
 	<div id="b">
-			<input type="text" id="inp">
+			<input type="text" id="inp" placeholder='输入你的弹幕!'>
 			<button id="fire">发射</button>
 			<button id="clear">清屏</button>
 	</div>
